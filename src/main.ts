@@ -17,6 +17,7 @@ async function bootstrap() {
     .setTitle("Hate-U API")
     .setDescription("API para criação da rede social Hate U")
     .setVersion("1.0")
+    .addServer("https://hateuapi-production.up.railway.app/")
     .addServer("http://localhost:3333")
     .addTag("status")
     .addTag("auth")
