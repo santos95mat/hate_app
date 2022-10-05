@@ -1,9 +1,19 @@
-import { Controller, Post, Body, Param, Delete } from "@nestjs/common";
+import {
+  Controller,
+  Post,
+  Body,
+  Param,
+  Delete,
+  UseGuards,
+} from "@nestjs/common";
 import { ChaseService } from "./chase.service";
 import { CreateChaseDto } from "./dto/create-chase.dto";
-import { ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { AuthGuard } from "@nestjs/passport";
 
+@UseGuards(AuthGuard())
 @ApiTags("chase")
+@ApiBearerAuth()
 @Controller("chase")
 export class ChaseController {
   constructor(private readonly chaseService: ChaseService) {}
