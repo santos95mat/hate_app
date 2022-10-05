@@ -1,26 +1,37 @@
-import { Injectable } from '@nestjs/common';
-import { CreateChaseDto } from './dto/create-chase.dto';
-import { UpdateChaseDto } from './dto/update-chase.dto';
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { PrismaService } from "src/prisma/prisma.service";
+import { handleErrorConstraintUnique } from "src/utils/handle-error-unique.util";
+import { CreateChaseDto } from "./dto/create-chase.dto";
+import { Chase } from "./entities/chase.entity";
 
 @Injectable()
 export class ChaseService {
-  create(createChaseDto: CreateChaseDto) {
-    return 'This action adds a new chase';
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(dto: CreateChaseDto): Promise<Chase | void> {
+    const data: CreateChaseDto = {
+      chaserId: dto.chaserId,
+      chasingId: dto.chasingId,
+    };
+
+    return await this.prisma.chase
+      .create({ data })
+      .catch(handleErrorConstraintUnique);
   }
 
-  findAll() {
-    return `This action returns all chase`;
+  async verifyIdAndReturnChase(id: string): Promise<Chase> {
+    const chase: Chase = await this.prisma.chase.findUnique({ where: { id } });
+
+    if (!chase) {
+      throw new NotFoundException(`Entrada de id '${id}' não encontrada`);
+    }
+
+    return chase;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} chase`;
-  }
+  async remove(id: string) {
+    await this.verifyIdAndReturnChase(id);
 
-  update(id: number, updateChaseDto: UpdateChaseDto) {
-    return `This action updates a #${id} chase`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} chase`;
+    return this.prisma.chase.delete({ where: { id } });
   }
 }

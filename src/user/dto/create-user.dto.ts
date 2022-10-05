@@ -20,16 +20,16 @@ export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty({
-    example: "(31) 99636-1530",
-    description: "Telefone de contato do usuário a ser cadastrado",
-  })
-  phone: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty({
     example: "User@123",
     description: "Senha do usuário a ser cadastrado",
   })
   password: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty({
+    example: "masculino ou feminino",
+    description: "Genero do usuário",
+  })
+  gender: "masculino" | "feminino";
 }

@@ -12,7 +12,8 @@ export class UserService {
     id: true,
     name: true,
     email: true,
-    phone: true,
+    password: false,
+    gender: true,
     updatedAt: true,
     createdAt: true,
   };
@@ -25,8 +26,8 @@ export class UserService {
     const data: CreateUserDto = {
       name: dto.name,
       email: dto.email,
-      phone: dto.phone,
       password: hashedPassword,
+      gender: dto.gender,
     };
 
     return await this.prisma.user
@@ -39,6 +40,8 @@ export class UserService {
       select: {
         ...this.userSelect,
         posts: true,
+        chaser: true,
+        chasing: true,
       },
     });
   }
@@ -49,6 +52,8 @@ export class UserService {
       select: {
         ...this.userSelect,
         posts: true,
+        chaser: true,
+        chasing: true,
       },
     });
 

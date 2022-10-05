@@ -19,8 +19,8 @@ model User {
   id String @id @default(uuid())
   name String
   email String @unique
-  phone String @unique
   password String
+  gender String
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -34,6 +34,8 @@ model User {
 }
 
 model Chase {
+  id String @unique @default(uuid())
+
   chaser User @relation("chaser", fields: [chaserId], references: [id])
   chaserId String @map("chaser_id")
 

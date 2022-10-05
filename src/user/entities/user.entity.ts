@@ -2,8 +2,8 @@ export class User {
   id: string;
   name: string;
   email: string;
-  phone: string;
-  password?: string;
+  password: string;
+  gender: string;
   createdAt: Date;
   updatedAt: Date;
 }
