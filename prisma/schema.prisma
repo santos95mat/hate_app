@@ -27,24 +27,26 @@ model User {
   posts Post[]
   comments Comment[]
 
-  chaser Chase[] @relation("chaser")
-  chasing Chase[] @relation("chasing")
+  chaser Chase[] @relation("chasing")
+  chasing Chase[] @relation("chaser")
 
   @@map("user")
 }
 
 model Chase {
   id String @unique @default(uuid())
-
-  chaser User @relation("chaser", fields: [chaserId], references: [id])
-  chaserId String @map("chaser_id")
+  chasingName String @map("chasing_name")
+  chaserName String @map("chaser_name")
 
   chasing User @relation("chasing", fields: [chasingId], references: [id])
   chasingId String @map("chasing_id")
 
+  chaser User @relation("chaser", fields: [chaserId], references: [id])
+  chaserId String @map("chaser_id")
+
   createdAt DateTime @default(now()) @map("created_at")
 
-  @@id([chaserId, chasingId])
+  @@id([chasingId, chaserId])
 
   @@map("chase")
 }
