@@ -8,6 +8,16 @@ import { JwtService } from "@nestjs/jwt";
 
 @Injectable()
 export class AuthService {
+  private userSelect = {
+    id: true,
+    name: true,
+    email: true,
+    password: false,
+    gender: true,
+    updatedAt: true,
+    createdAt: true,
+  };
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService
@@ -16,7 +26,15 @@ export class AuthService {
   async login(dto: LoginDto): Promise<LoginResponseDto> {
     const { email, password } = dto;
 
-    const user: User = await this.prisma.user.findUnique({ where: { email } });
+    const user: User = await this.prisma.user.findUnique({
+      where: { email },
+      select: {
+        ...this.userSelect,
+        posts: true,
+        chaser: true,
+        chasing: true,
+      },
+    });
 
     if (!user) {
       throw new NotFoundException("Email ou senha inválidos");
