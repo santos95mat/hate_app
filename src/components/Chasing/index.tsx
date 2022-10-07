@@ -1,13 +1,13 @@
-import { useAuth } from "../../contexts/auth";
+import { useUsers } from "../../contexts/users";
 import { StyledChasing } from "./styles";
 
 const Chasing = () => {
-  const { currentUser } = useAuth();
+	const { chasing } = useUsers();
 
   return (
     <StyledChasing>
       <div id="container">
-        {currentUser.chasing.map((e: any, i: any) => {
+        {chasing().map((e: any, i: any) => {
           return (
             <article key={i}>
               <div className="foto"></div>
