@@ -12,7 +12,7 @@ export class AuthService {
     id: true,
     name: true,
     email: true,
-    password: false,
+    password: true,
     gender: true,
     updatedAt: true,
     createdAt: true,
