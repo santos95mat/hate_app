@@ -85,8 +85,11 @@ export const StyledHeader = styled.header`
     gap: 6px;
 
     div.users {
+      padding-left: 12px;
+      padding-right: 12px;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       height: 4vh;
       border-radius: 5px;
       width: 98%;
@@ -95,11 +98,16 @@ export const StyledHeader = styled.header`
       cursor: pointer;
       p {
         color: black;
-        margin-left: 5px;
       }
 
       :hover {
         background-color: #b2b2b2;
+      }
+
+      span {
+        :hover {
+          text-decoration: underline;
+        }
       }
     }
   }

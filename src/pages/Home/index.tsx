@@ -19,7 +19,7 @@ declare type TypedSection = "profile" | "chaser" | "chasing";
 
 const Home = (): JSX.Element => {
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout, currentUser } = useAuth();
 
   const {
     getAllUsers,
@@ -32,23 +32,21 @@ const Home = (): JSX.Element => {
     chasing,
   } = useUsers();
 
-  // getAllUsers().then(res => console.log(res));
-  // console.log();
-  // getUserById("90f19469-ab03-4023-b639-5e78db7e1929").then(res => console.log(res));
-  // console.log();
-  // console.log(chasers());
-  // console.log();
-  // console.log(chasing());
-  // console.log();
-
   const [section, setSection] = useState<TypedSection>("profile");
   const [search, setSearch] = useState(false);
   const [users, setUsers] = useState<any>([]);
+  const [chasings, setChasings] = useState<any>([]);
   const [text, setText] = useState<any>("");
 
   const getAll = async () => {
     const index: any = await getAllUsers();
     setUsers(index);
+  };
+
+  const getChasing = async () => {
+    const index: any = await chasing();
+    const data = index.map((e: any) => e.chasingId);
+    setChasings(data);
   };
 
   return (
@@ -81,6 +79,7 @@ const Home = (): JSX.Element => {
                 onClick={() => {
                   setSearch(true);
                   getAll();
+                  getChasing();
                 }}
                 onChange={(e) => {
                   setText(e.target.value);
@@ -99,11 +98,37 @@ const Home = (): JSX.Element => {
                     e.name.toLowerCase().includes(text.toLowerCase())
                   )
                   .map((e: any, i: any) => {
-                    return (
-                      <div className="users" key={i}>
-                        <p>{e.name}</p>
-                      </div>
-                    );
+                    if (e.id !== currentUser.id)
+                      return (
+                        <div className="users" key={i}>
+                          <p>{e.name}</p>
+
+                          {chasings.includes(e.id) ? (
+                            <span
+                              onClick={() => {
+                                unfollow(e.id).then(() => {
+                                  const res = chasings.filter(
+                                    (f: any) => f !== e.id
+                                  );
+                                  setChasings(res);
+                                });
+                              }}
+                            >
+                              Unfollow
+                            </span>
+                          ) : (
+                            <span
+                              onClick={() => {
+                                follow(e.id).then(() =>
+                                  setChasings([...chasings, e.id])
+                                );
+                              }}
+                            >
+                              Follow
+                            </span>
+                          )}
+                        </div>
+                      );
                   })}
               </div>
             ) : (

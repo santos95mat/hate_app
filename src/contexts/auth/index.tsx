@@ -15,6 +15,7 @@ interface AuthProviderProps {
 interface AuthProviderData {
   currentToken: string | null;
   currentUser: any | null;
+  setCurrentUser: any | null;
   logged: boolean;
   login: (params: LoginParams) => void;
   logout: () => void;
@@ -79,7 +80,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   return (
     <AuthContext.Provider
-      value={{ currentToken, currentUser, logged, login, logout }}
+      value={{
+        currentToken,
+        currentUser,
+        logged,
+        login,
+        logout,
+        setCurrentUser,
+      }}
     >
       {children}
     </AuthContext.Provider>

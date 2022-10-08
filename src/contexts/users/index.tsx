@@ -102,7 +102,7 @@ const validateGender = (gender: string): boolean | void => {
 const usersContext = createContext<UsersProviderData>({} as UsersProviderData);
 
 export const UsersProvider = ({ children }: UsersProviderProps) => {
-  const { currentToken, currentUser } = useAuth();
+  const { currentToken, currentUser, setCurrentUser } = useAuth();
 
   const headers = {
     headers: {
@@ -188,6 +188,11 @@ export const UsersProvider = ({ children }: UsersProviderProps) => {
       chasingId: chasing,
     };
     const res = await api.post(`/chase/`, data, headers);
+
+    await api
+      .get(`/user/${currentUser.id}`, headers)
+      .then((res) => setCurrentUser(res.data));
+
     if (res.status === 200) {
       return res.data;
     } else {
@@ -198,10 +203,15 @@ export const UsersProvider = ({ children }: UsersProviderProps) => {
 
   const unfollow = async (chasingId: string) => {
     const currentUnfollow = currentUser.chasing.find(
-      (e: UserDefault) => e.id === chasingId
+      (e: any) => e.chasingId === chasingId
     );
 
     const res = await api.delete(`/chase/${currentUnfollow.id}`, headers);
+
+    await api
+      .get(`/user/${currentUser.id}`, headers)
+      .then((res) => setCurrentUser(res.data));
+
     if (res.status === 200) {
       return res.data;
     } else {
