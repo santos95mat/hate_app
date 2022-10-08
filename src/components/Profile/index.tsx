@@ -1,15 +1,15 @@
 import { useAuth } from "../../contexts/auth";
 import { StyledProfile } from "./styles";
+import editImg from "../../assets/edit.png";
 
 const Profile = () => {
   const { currentUser } = useAuth();
-
-  console.log(currentUser);
 
   return (
     <StyledProfile>
       <div id="capa"></div>
       <div id="foto"></div>
+      <img src={editImg} alt="" />
       <div id="user">
         <h1>{currentUser.name}</h1>
         <p>({currentUser.id})</p>

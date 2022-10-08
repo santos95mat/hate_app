@@ -7,6 +7,7 @@ export const StyledProfile = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 1%;
+  position: relative;
 
   div#capa {
     width: 100%;
@@ -18,12 +19,25 @@ export const StyledProfile = styled.div`
 
   div#foto {
     position: absolute;
-    top: 25vh;
+    top: 10vh;
     width: 20vh;
     height: 20vh;
     border-radius: 10vh;
     background-color: black;
     border: 0.5vh solid #7c7c7c;
+  }
+
+  img {
+    cursor: pointer;
+    position: absolute;
+    width: 20px;
+    top: 2%;
+    right: 2%;
+    transition: 0.3s ease;
+
+    :hover {
+      transform: scale(1.1);
+    }
   }
 
   div#user {
