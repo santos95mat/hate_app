@@ -174,10 +174,12 @@ const Home = (): JSX.Element => {
             <Chaser></Chaser>
           ) : section === "chasing" ? (
             <Chasing></Chasing>
-          ) : (
+          ) : !matches ? (
             <StyledPosts>
               <h1> UNDER BUILDING</h1>
             </StyledPosts>
+          ) : (
+            <>{setSection("profile")}</>
           )}
         </StyledMenu>
         {matches && (
