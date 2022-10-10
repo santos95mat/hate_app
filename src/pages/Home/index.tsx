@@ -27,12 +27,12 @@ const Home = (): JSX.Element => {
 
   const {
     getAllUsers,
-    getUserById,
-    updateUserProfile,
-    deleteUserProfile,
+    // getUserById,
+    // updateUserProfile,
+    // deleteUserProfile,
     follow,
     unfollow,
-    chasers,
+    // chasers,
     chasing,
   } = useUsers();
 

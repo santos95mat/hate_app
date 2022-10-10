@@ -142,43 +142,11 @@ export const StyledNav = styled.article<any>`
   }
 
   ${({ active }) => {
-    if (active === "profile") {
-      return (
-        Boolean(active === "profile") &&
-        css`
-          p#profile {
-            border-bottom: 5px solid rgba(23, 113, 16, 1);
-          }
-        `
-      );
-    } else if (active === "chaser") {
-      return (
-        Boolean(active === "chaser") &&
-        css`
-          p#chaser {
-            border-bottom: 5px solid rgba(23, 113, 16, 1);
-          }
-        `
-      );
-    } else if (active === "chasing") {
-      return (
-        Boolean(active === "chasing") &&
-        css`
-          p#chasing {
-            border-bottom: 5px solid rgba(23, 113, 16, 1);
-          }
-        `
-      );
-    } else {
-      return (
-        Boolean(active === "home") &&
-        css`
-          p#home {
-            border-bottom: 5px solid rgba(23, 113, 16, 1);
-          }
-        `
-      );
-    }
+    return css`
+      p#${active} {
+        border-bottom: 5px solid rgba(23, 113, 16, 0.9);
+      }
+    `;
   }}
 `;
 
