@@ -169,6 +169,15 @@ export const StyledNav = styled.article<any>`
           }
         `
       );
+    } else {
+      return (
+        Boolean(active === "home") &&
+        css`
+          p#home {
+            border-bottom: 5px solid rgba(23, 113, 16, 1);
+          }
+        `
+      );
     }
   }}
 `;

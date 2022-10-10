@@ -12,14 +12,18 @@ import Profile from "../../components/Profile";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/auth";
 import Chaser from "../../components/Chaser";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUsers } from "../../contexts/users";
 
-declare type TypedSection = "profile" | "chaser" | "chasing";
+declare type TypedSection = "profile" | "chaser" | "chasing" | "home";
 
 const Home = (): JSX.Element => {
   const navigate = useNavigate();
   const { logout, currentUser } = useAuth();
+
+  const [matches, setMatches] = useState(
+    window.matchMedia("(min-width: 992px)").matches
+  );
 
   const {
     getAllUsers,
@@ -48,6 +52,12 @@ const Home = (): JSX.Element => {
     const data = index.map((e: any) => e.chasingId);
     setChasings(data);
   };
+
+  useEffect(() => {
+    window
+      .matchMedia("(min-width: 992px)")
+      .addEventListener("change", (e) => setMatches(e.matches));
+  }, []);
 
   return (
     <>
@@ -98,7 +108,7 @@ const Home = (): JSX.Element => {
                     e.name.toLowerCase().includes(text.toLowerCase())
                   )
                   .map((e: any, i: any) => {
-                    if (e.id !== currentUser.id)
+                    if (e.id !== currentUser.id) {
                       return (
                         <div className="users" key={i}>
                           <p>{e.name}</p>
@@ -129,6 +139,9 @@ const Home = (): JSX.Element => {
                           )}
                         </div>
                       );
+                    } else {
+                      return undefined;
+                    }
                   })}
               </div>
             ) : (
@@ -139,6 +152,11 @@ const Home = (): JSX.Element => {
           </StyledHeader>
 
           <StyledNav active={section}>
+            {!matches && (
+              <p id="home" onClick={() => setSection("home")}>
+                Home
+              </p>
+            )}
             <p id="profile" onClick={() => setSection("profile")}>
               Perfil
             </p>
@@ -154,13 +172,19 @@ const Home = (): JSX.Element => {
             <Profile></Profile>
           ) : section === "chaser" ? (
             <Chaser></Chaser>
-          ) : (
+          ) : section === "chasing" ? (
             <Chasing></Chasing>
+          ) : (
+            <StyledPosts>
+              <h1> UNDER BUILDING</h1>
+            </StyledPosts>
           )}
         </StyledMenu>
-        <StyledPosts>
-          <h1> UNDER BUILDING</h1>
-        </StyledPosts>
+        {matches && (
+          <StyledPosts>
+            <h1> UNDER BUILDING</h1>
+          </StyledPosts>
+        )}
       </StyledBody>
     </>
   );
