@@ -17,6 +17,10 @@ export const StyledMenu = styled.article`
   div {
     display: flex;
   }
+
+  @media screen and (max-width: 992px) {
+    max-width: 100%;
+  }
 `;
 
 export const StyledHeader = styled.header`
