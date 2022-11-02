@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator erd {
+  provider = "prisma-erd-generator"
+  output = "../db.pdf"
+}
+
+model User {
+  id String @id @default(uuid())
+  name String
+  email String @unique
+  password String
+  gender String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  posts Post[]
+  comments Comment[]
+
+  chaser Chase[] @relation("chasing")
+  chasing Chase[] @relation("chaser")
+
+  @@map("user")
+}
+
+model Chase {
+  id String @unique @default(uuid())
+  chasingName String @map("chasing_name")
+  chaserName String @map("chaser_name")
+
+  chasing User @relation("chasing", fields: [chasingId], references: [id])
+  chasingId String @map("chasing_id")
+
+  chaser User @relation("chaser", fields: [chaserId], references: [id])
+  chaserId String @map("chaser_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@id([chasingId, chaserId])
+
+  @@map("chase")
+}
+
+
+model Post {
+  id String @id @default(uuid())
+  post String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  comments Comment[]
+
+  author User @relation(fields: [authorId], references: [id])
+  authorId String @map("author_id")
+
+  @@map("post")
+}
+
+model Comment {
+  id String @id @default(uuid())
+  comment String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  author User @relation(fields: [authorId], references: [id])
+  authorId String @map("author_id")
+
+  post Post @relation(fields: [postId], references: [id])
+  postId String @map("post_id")
+
+  @@map("comment")
+}
