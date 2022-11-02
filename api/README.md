@@ -8,9 +8,7 @@
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![Yarn](https://img.shields.io/badge/yarn-%232C8EBB.svg?style=for-the-badge&logo=yarn&logoColor=white)
 
-Este é o projeto do módulo quatro do curso de Desenvolvimento Full Stack da Blue Edtech.
-
-Para esta aplicação foi desenvolvida uma API para cadastro de pssoas em um formulário.
+Para esta aplicação foi desenvolvida uma API para a construção de uma rede social.
 Este apresenta fundamentos em NestJS e Prisma e documentação de projetos
 
 ## Scripts disponíveis
